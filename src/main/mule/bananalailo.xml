@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="55df802a-d061-43fa-8dd1-c982e4bb3e5c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="bananalailoFlow" doc:id="1090f349-3be4-48a4-9d9e-c56666d118d3" >
+		<http:listener doc:name="Listener" doc:id="3f1bb5e4-9e9b-4c09-9eb8-9e9e2edf34f8" config-ref="HTTP_Listener_config" path="/test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9a7b2dfc-85cf-4857-b30b-2a6122b92fdc" message="start flow"/>
+		<ee:transform doc:name="Transform Message" doc:id="2f808e19-eff2-4c44-97ad-142a99ec479a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"banana wholesellprice": "rate 30 rupees"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6701cec2-5093-4a1f-8449-4ffa86c867d2" message="end flow"/>
+	</flow>
+</mule>
